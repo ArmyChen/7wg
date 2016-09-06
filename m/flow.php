@@ -869,17 +869,17 @@ $_SESSION['direct_shopping']=1;
         }
     }
 
-	foreach($payment_list  as    $key=>$value){
-	//判断是否为微信浏览器
-			if($value['pay_code']=="wx_new_jspay"){
-				$is_wechat=is_wechat_browser();
+	// foreach($payment_list  as    $key=>$value){
+	// //判断是否为微信浏览器
+	// 		if($value['pay_code']=="wx_new_jspay"){
+	// 			$is_wechat=is_wechat_browser();
 
-				if($is_wechat==false){
+	// 			if($is_wechat==false){
 
-					unset($payment_list[$key]);
-				}
-			}
-	}
+	// 				unset($payment_list[$key]);
+	// 			}
+	// 		}
+	// }
 	
     $smarty->assign('payment_list', $payment_list);
 
