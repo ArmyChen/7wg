@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{$page_title}</title>
+<meta name="Keywords" content="{$keywords}" />
+<meta name="Description" content="{$description}" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<link href="{$ecsolve_path}/style/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{$ecsolve_path}/js/jquery-1.7.2.min.js" ></script>
+
+</head>
+<body class="body_index">
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+
+
+<!--当前位置开始--><div id="location" ><!-- #BeginLibraryItem "/library/ur_here.lbi" --><!-- #EndLibraryItem --></div><!--当前位置结束-->
+
+
+<div class="title"></div><div class="product"><ul class="subchannellist" style="display:block; float:left;"><li><a href="#" >企业新闻</a></li>
+		    <li><a href="#" >行业新闻</a></li></ul><div class="left_title"><h2><a href="" >新闻中心</a></h2></div>
+		    
+		    <div class="left_body"><ul class="gridlist2"><!--循环开始-->
+		    
+
+
+ <!--{foreach name=article from=$artciles_list item=article}--> 
+<li><a  href="{$article.url}"><div class="InfoPicture"><img src="{$site_url}{$article.file_url}" /></div><div class="InfoTitle">{$article.title}</div></a></li>
+
+{/foreach}
+
+		    
+		    
+		  <!--循环结束--></ul><!-- 橱窗样式 列表结束---><div class="clear"></div><div class="page"><div id="flip"><style>.digg4  { padding:3px; margin:3px; text-align:center; font-family:Tahoma, Arial, Helvetica, Sans-serif;  font-size: 12px;}
+.digg4  a { border:1px solid #ddd; padding:2px 5px 2px 5px; margin:2px;  text-decoration:none; color:#CCC}
+.digg4  a:hover { border:1px solid #a0a0a0; }.digg4  a:hover { border:1px solid #a0a0a0; }
+.digg4  span.current {border:1px solid #e0e0e0; padding:2px 5px 2px 5px; margin:2px; color:#aaa; background-color:#f0f0f0; text-decoration:none;}
+.digg4  span.disabled { border:1px solid #f3f3f3; padding:2px 5px 2px 5px; margin:2px; color:#ccc;} </style>
+
+<div class='digg4'>
+
+<!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
+
+</div></div></div></div><div class="left_bottom"></div></div>
+
+
+
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</body></html>

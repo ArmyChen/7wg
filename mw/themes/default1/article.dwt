@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{$page_title}</title>
+<meta name="Keywords" content="{$keywords}" />
+<meta name="Description" content="{$description}" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<link href="{$ecsolve_path}/style/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{$ecsolve_path}/js/jquery-1.7.2.min.js" ></script>
+
+</head>
+<body class="body_index">
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+
+
+
+<!--当前位置开始--><div id="location" ><!-- #BeginLibraryItem "/library/ur_here.lbi" --><!-- #EndLibraryItem --></div><!--当前位置结束-->
+
+<div  class="single"><div class="left_title"><h2>{$article.title}</h2></div><ul class="subchannellist"></ul>
+
+
+<div class="ChannelContent">
+
+
+
+
+
+{if $article.mcontent}
+	 {$article.mcontent}
+	{else}
+	 {$article.content}
+	{/if}
+
+
+
+
+</div>
+<div class="clear"></div>
+</div>
+
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+
+</body></html>

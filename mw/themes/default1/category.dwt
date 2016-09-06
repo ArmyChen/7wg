@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{$page_title}</title>
+<meta name="Keywords" content="{$keywords}" />
+<meta name="Description" content="{$description}" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<link href="{$ecsolve_path}/style/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{$ecsolve_path}/js/jquery-1.7.2.min.js" ></script>
+
+</head>
+<body class="body_index">
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+
+<!--当前位置开始--><div id="location" ><!-- #BeginLibraryItem "/library/ur_here.lbi" --><!-- #EndLibraryItem --></div><!--当前位置结束-->
+
+<div class="title"></div><div class="product">
+<ul class="subchannellist" style="display:block; float:left;">
+
+
+ {foreach from=$categories item=cat}
+
+
+
+	 <!--{foreach from=$cat.cat_id item=child name=child}-->
+   {if $smarty.foreach.child.iteration <11}
+         
+
+<li><a href="{$child.url}" >{$child.name|escape:html}</a></li>
+</li>
+
+
+
+
+
+  {/if}
+{/foreach}
+{/foreach}	 
+
+
+
+
+
+
+
+
+
+</ul>
+<div class="left_title">
+
+
+
+      <h2>{$cat_name}</h2>
+
+
+</div>
+
+<div class="left_body">
+
+<ul class="gridlist2">
+
+
+ {foreach name=goods from=$goods_list item=goods name=index_goods}
+ {if $goods.name}
+<li><a  href="{$goods.url}"><div class="InfoPicture"><img src="{$site_url}{$goods.goods_img}" /></div><div class="InfoTitle">{$goods.name|escape:html}</div></a></li>
+{/if}
+{/foreach}
+
+
+
+
+
+
+
+
+
+
+
+</ul><!-- 橱窗样式 列表结束---><div class="clear"></div><div class="page"><div id="flip"><style>.digg4  { padding:3px; margin:3px; text-align:center; font-family:Tahoma, Arial, Helvetica, Sans-serif;  font-size: 12px;}
+.digg4  a { border:1px solid #ddd; padding:2px 5px 2px 5px; margin:2px;  text-decoration:none; color:#CCC}
+.digg4  a:hover { border:1px solid #a0a0a0; }.digg4  a:hover { border:1px solid #a0a0a0; }
+.digg4  span.current {border:1px solid #e0e0e0; padding:2px 5px 2px 5px; margin:2px; color:#aaa; background-color:#f0f0f0; text-decoration:none;}
+.digg4  span.disabled { border:1px solid #f3f3f3; padding:2px 5px 2px 5px; margin:2px; color:#ccc;} </style>
+<div class='digg4'><!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
+</div></div></div></div><div class="left_bottom"></div></div>
+
+
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</body></html>

@@ -1,0 +1,32 @@
+<div class="bottom"></div>
+
+
+<div id="copyright">
+<!--<div class="bottom_navigation"></div><div class="Mobile"><a href="tel:{$service_phone}">点击免费电话咨询:{$service_phone}</a></div><div class="Language"></div>-->
+<div class="bottom_copyright">电 话：{$service_phone} &nbsp;&nbsp;电子邮箱：{$service_email}<br> 地址： {$shop_address} </div>
+</div>
+
+<!--版权 结束-->
+
+
+
+
+
+
+
+
+
+
+
+<div id="tool"><ul class="toollist toollist_green">
+<li><a  href="{$weburl}"  ><img src="{$ecsolve_path}/images/home.png" ><p>返回首页</p></a></li>
+<!-- {if $navigator_list.bottom} -->
+   <!-- {foreach name=nav_bottom_list from=$navigator_list.bottom item=nav} -->
+
+   <li><a  href="{if $nav.durl} {$nav.durl} {else}{$nav.url}{/if}"><img src="{$ecsolve_path}/images/fnav{$smarty.foreach.nav_bottom_list.iteration}.png" ><p>{$nav.name}</p></a></li>
+ <!-- {/foreach} -->
+  <!-- {/if} -->
+
+
+
+
