@@ -181,6 +181,8 @@ class wx_new_jspay
             //$html .= '<button type="button" class="c-btn3" onclick="callpay()"       class="pay_bottom">微信支付</button>';
 
             //return $html;
+            $user_agent = $_SERVER['HTTP_USER_AGENT'];
+        
             if(strpos($user_agent, 'MicroMessenger') === false)
             {
                 $unifiedOrder = new UnifiedOrder_pub();
@@ -199,7 +201,7 @@ class wx_new_jspay
                 $html .= '<div class="wx_qrcode" style="text-align:center">';
                 $html .= $this->getcode($code_url);
                 $html .= "</div>";
-                $html .= "<div style=\"text-align:center\"><span style=\"color:red\">长按图片进行保存，然后用微信扫一扫扫描相册付款。</span><br/>点击<a href=\"user.php?act=order_list\">此处</a>查看我的订单</div>";
+                $html .= "<div style=\"text-align:center\"><span style=\"color:red\">长按图片进行保存或者识别，然后用微信扫一扫扫描相册付款。</span><br/>点击<a href=\"user.php?act=order_list\">此处</a>查看我的订单</div>";
         
             }else{
                 $redirect = urlencode($GLOBALS['ecs']->url().'flow.php?step=ok&order_id='.$order['order_sn']);
