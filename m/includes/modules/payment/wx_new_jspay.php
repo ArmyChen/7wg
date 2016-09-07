@@ -193,13 +193,18 @@ class wx_new_jspay
                 $unifiedOrder->setParameter("attach",strval($order['log_id']));//商户支付日志
                 $unifiedOrder->setParameter("total_fee",strval(intval($order['order_amount']*100)));//总金额
                 $unifiedOrder->setParameter("notify_url",WXNOTIFY_URL);//通知地址 
-                $unifiedOrder->setParameter("trade_type","NATIVE");//交易类型
+                $unifiedOrder->setParameter("trade_type","WAP");//交易类型
 
                 $unifiedOrderResult = $unifiedOrder->getResult();
-                
+                var_dump($unifiedOrderResult);
                 $prepay_id = $unifiedOrderResult["prepay_id"];
                 $code_url = $unifiedOrderResult["code_url"];
-                $url = "https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=".$prepay_id."&package=3455377915";
+                $appid=$payment['appid'];
+                $noncestr = $unifiedOrder->parameters["nonce_str"];
+                $sign = $unifiedOrder->parameters["sign"];
+          //weixin://wap/pay?appid=wxe9df2d94d30c277c&noncestr=etsrmvrxdu59xkn5jejl2e0zhuks5wsc&package=WAP&prepayid=wx201609072157312c4bb4ef200077307598&sign=BE34891AE577691463F8D498C4B8290B&timestamp=1473256652
+                 $url = Urlencode("weixin://wap/pay?appid=".$appid."&noncestr=".$noncestr."&package=WAP&prepayid=".$prepay_id."&sign=".$sign."&timestamp=".time());
+                // $url = "?prepay_id=".$prepay_id."&package=3455377915";
                 // $html .= '<div class="wx_qrcode" style="text-align:center">';
                 // $html .= $this->getcode($code_url);
                 // $html .= "</div>";
@@ -229,28 +234,28 @@ class wx_new_jspay
         
     }
 
-    function getcode($url){
-        //var_dump($url);
-        if(file_exists(ROOT_PATH . 'includes/phpqrcode.php')){
-            include(ROOT_PATH . 'includes/phpqrcode.php');
-        }
-        // 纠错级别：L、M、Q、H 
-        $errorCorrectionLevel = 'Q';  
-        // 点的大小：1到10 
-        $matrixPointSize = 5;
-        // 生成的文件名
-        $tmp = ROOT_PATH .'images/qrcode/';
-        if(!is_dir($tmp)){
-            @mkdir($tmp);
-        }
-        $filename = $tmp . $errorCorrectionLevel . $matrixPointSize . '.png';
-        //var_dump($filename);
-       // echo "<br>";
-        //echo QRcode::png($url);
-        QRcode::png($url, $filename, $errorCorrectionLevel, $matrixPointSize, 2);
-    //    return '<img src="'.$GLOBALS['ecs']->url(). 'images/qrcode/'.basename($filename).'" />';
-        return '<img src="'.$GLOBALS['ecs']->url(). 'images/qrcode/'.basename($filename).'" />';
-    }
+    // function getcode($url){
+    //     //var_dump($url);
+    //     if(file_exists(ROOT_PATH . 'includes/phpqrcode.php')){
+    //         include(ROOT_PATH . 'includes/phpqrcode.php');
+    //     }
+    //     // 纠错级别：L、M、Q、H 
+    //     $errorCorrectionLevel = 'Q';  
+    //     // 点的大小：1到10 
+    //     $matrixPointSize = 5;
+    //     // 生成的文件名
+    //     $tmp = ROOT_PATH .'images/qrcode/';
+    //     if(!is_dir($tmp)){
+    //         @mkdir($tmp);
+    //     }
+    //     $filename = $tmp . $errorCorrectionLevel . $matrixPointSize . '.png';
+    //     //var_dump($filename);
+    //    // echo "<br>";
+    //     //echo QRcode::png($url);
+    //     QRcode::png($url, $filename, $errorCorrectionLevel, $matrixPointSize, 2);
+    // //    return '<img src="'.$GLOBALS['ecs']->url(). 'images/qrcode/'.basename($filename).'" />';
+    //     return '<img src="'.$GLOBALS['ecs']->url(). 'images/qrcode/'.basename($filename).'" />';
+    // }
     
     function respond()
     {
