@@ -869,17 +869,17 @@ $_SESSION['direct_shopping']=1;
         }
     }
 
-	foreach($payment_list  as    $key=>$value){
-	//判断是否为微信浏览器
-			if($value['pay_code']=="wx_new_jspay"){
-				$is_wechat=is_wechat_browser();
+	// foreach($payment_list  as    $key=>$value){
+	// //判断是否为微信浏览器
+	// 		if($value['pay_code']=="wx_new_jspay"){
+	// 			$is_wechat=is_wechat_browser();
 
-				if($is_wechat==false){
+	// 			if($is_wechat==false){
 
-					unset($payment_list[$key]);
-				}
-			}
-	}
+	// 				unset($payment_list[$key]);
+	// 			}
+	// 		}
+	// }
 	
     $smarty->assign('payment_list', $payment_list);
 
@@ -2062,12 +2062,12 @@ elseif ($_REQUEST['step'] == 'done')
     /* 插入支付日志 */
     $order['log_id'] = insert_pay_log($new_order_id, $order['order_amount'], PAY_ORDER);
 	/* 取得支付信息，生成支付代码 */
+   
     if ($order['order_amount'] > 0)
     {
         $payment = payment_info($order['pay_id']);
 
         include_once('includes/modules/payment/' . $payment['pay_code'] . '.php');
-
         $pay_obj    = new $payment['pay_code'];
 
         $pay_online = $pay_obj->get_code($order, unserialize_config($payment['pay_config']));
@@ -2076,6 +2076,9 @@ elseif ($_REQUEST['step'] == 'done')
 
         $smarty->assign('pay_online', $pay_online);
     }
+    
+    
+    
     if(!empty($order['shipping_name']))
     {
         $order['shipping_name']=trim(stripcslashes($order['shipping_name']));
