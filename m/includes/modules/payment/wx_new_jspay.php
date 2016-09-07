@@ -181,17 +181,44 @@ class wx_new_jspay
             //$html .= '<button type="button" class="c-btn3" onclick="callpay()"       class="pay_bottom">微信支付</button>';
 
             //return $html;
+            $user_agent = $_SERVER['HTTP_USER_AGENT'];
 
+            if(strpos($user_agent, 'MicroMessenger') === false)
+            {
+                $unifiedOrder = new UnifiedOrder_pub();
+	
+                $unifiedOrder->setParameter("body",$order['order_sn']);//商品描述
+                $out_trade_no = $order['order_sn'];
+                $unifiedOrder->setParameter("out_trade_no","$out_trade_no");//商户订单号 
+                $unifiedOrder->setParameter("attach",strval($order['log_id']));//商户支付日志
+                $unifiedOrder->setParameter("total_fee",strval(intval($order['order_amount']*100)));//总金额
+                $unifiedOrder->setParameter("notify_url",WXNOTIFY_URL);//通知地址 
+                $unifiedOrder->setParameter("trade_type","NATIVE");//交易类型
 
-            $redirect = urlencode($GLOBALS['ecs']->url().'flow.php?step=ok&order_id='.$order['order_sn']);
-            $url = $jsApi->createOauthUrlForCode($redirect);
+                $unifiedOrderResult = $unifiedOrder->getResult();
+                
+                $prepay_id = $unifiedOrderResult["prepay_id"];
+                $code_url = $unifiedOrderResult["code_url"];
+                $url = "https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=".$prepay_id."&package=3455377915";
+                // $html .= '<div class="wx_qrcode" style="text-align:center">';
+                // $html .= $this->getcode($code_url);
+                // $html .= "</div>";
+                // $html .= "<div style=\"text-align:center\"><span style=\"color:red\">长按图片进行保存或者识别，然后用微信扫一扫扫描相册付款。</span></div>";
+                $html .= '<a href='.$url.'><button type="button"  class="c-btn3" >微信支付</button></a>';
+            }else{
+                $redirect = urlencode($GLOBALS['ecs']->url().'flow.php?step=ok&order_id='.$order['order_sn']);
+                $url = $jsApi->createOauthUrlForCode($redirect);
+                $html .= '<a href='.$url.'><button type="button"  class="c-btn3" >微信支付</button></a>';
+            }
+
+           
              //Header("Location: $url"); //取消了这个，否就是用户查看订单就自动跳了
            //$html .= '<script language="javascript">';
           // $html .= 'function callpay(){';
            // $html .= 'alert("请在微信中使用微信支付")';
            // $html .= "}";
           // $html .= '</script>';
-            $html .= '<a href='.$url.'><button type="button"  class="c-btn3" >微信支付</button></a>';
+           
 
             return $html;
 
@@ -201,6 +228,30 @@ class wx_new_jspay
 
         
     }
+
+    function getcode($url){
+        //var_dump($url);
+        if(file_exists(ROOT_PATH . 'includes/phpqrcode.php')){
+            include(ROOT_PATH . 'includes/phpqrcode.php');
+        }
+        // 纠错级别：L、M、Q、H 
+        $errorCorrectionLevel = 'Q';  
+        // 点的大小：1到10 
+        $matrixPointSize = 5;
+        // 生成的文件名
+        $tmp = ROOT_PATH .'images/qrcode/';
+        if(!is_dir($tmp)){
+            @mkdir($tmp);
+        }
+        $filename = $tmp . $errorCorrectionLevel . $matrixPointSize . '.png';
+        //var_dump($filename);
+       // echo "<br>";
+        //echo QRcode::png($url);
+        QRcode::png($url, $filename, $errorCorrectionLevel, $matrixPointSize, 2);
+    //    return '<img src="'.$GLOBALS['ecs']->url(). 'images/qrcode/'.basename($filename).'" />';
+        return '<img src="'.$GLOBALS['ecs']->url(). 'images/qrcode/'.basename($filename).'" />';
+    }
+    
     function respond()
     {
 		

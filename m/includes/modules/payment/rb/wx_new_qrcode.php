@@ -110,6 +110,14 @@ class wx_new_qrcode
             $html .= "</div>";
 
             $html .= "<div style=\"text-align:center\">支付后点击<a href=\"user.php?act=order_list\">此处</a>查看我的订单</div>";
+        }else{
+            $html = $code_url.'<button type="button" onclick="javascript:alert(\'出错了\')">微信支付</button>';
+            $code_url = $unifiedOrderResult["code_url"];
+            $html .= '<div class="wx_qrcode" style="text-align:center">';
+            $html .= $this->getcode($code_url);
+            $html .= "</div>";
+
+            $html .= "<div style=\"text-align:center\">支付后点击<a href=\"user.php?act=order_list\">此处</a>查看我的订单</div>";
         }
         
         
