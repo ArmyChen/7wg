@@ -199,7 +199,7 @@ class wx_new_jspay
                 $html .= '<div class="wx_qrcode" style="text-align:center">';
                 $html .= $this->getcode($code_url);
                 $html .= "</div>";
-                $html .= "<div style=\"text-align:center\">支付后点击<a href=\"user.php?act=order_list\">此处</a>查看我的订单</div>";
+                $html .= "<div style=\"text-align:center\"><span style=\"color:red\">长按图片进行保存，然后用微信扫一扫扫描相册付款。</span><br/>点击<a href=\"user.php?act=order_list\">此处</a>查看我的订单</div>";
         
             }else{
                 $redirect = urlencode($GLOBALS['ecs']->url().'flow.php?step=ok&order_id='.$order['order_sn']);
