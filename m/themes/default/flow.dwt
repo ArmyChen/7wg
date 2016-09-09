@@ -993,7 +993,7 @@ jQuery(function($){
 <!-- 结束用户登录注册界面 --> 
 <!-- {/if} -->
 
-  <!-- #BeginLibraryItem "/library/page_footer2.lbi" --><!-- #EndLibraryItem -->
+ <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 
 <div class="blank3"></div>
 

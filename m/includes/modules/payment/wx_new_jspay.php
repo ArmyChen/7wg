@@ -193,7 +193,7 @@ class wx_new_jspay
                 $unifiedOrder->setParameter("attach",strval($order['log_id']));//商户支付日志
                 $unifiedOrder->setParameter("total_fee",strval(intval($order['order_amount']*100)));//总金额
                 $unifiedOrder->setParameter("notify_url",WXNOTIFY_URL);//通知地址 
-                $unifiedOrder->setParameter("trade_type","WAP");//交易类型
+                $unifiedOrder->setParameter("trade_type","NATIVE");//交易类型
 
                 $unifiedOrderResult = $unifiedOrder->getResult();
            
@@ -215,10 +215,9 @@ class wx_new_jspay
                 $array["timestamp"] = $time;
                 $array["out_trade_no"] = $out_trade_no;
                 $array["body"] = $unifiedOrderResult["body"];
-                $array["total_fee"] = $unifiedOrderResult["total_fee"];
-                $array["notify_url"] =$unifiedOrderResult["notify_url"];
+                $array["total_fee"] = strval(intval($order['order_amount']*100));
+                $array["notify_url"] = WXNOTIFY_URL;
                 $array["mch_id"] =$unifiedOrderResult["mch_id"];
-                $array["spbill_create_ip"] =$unifiedOrderResult["spbill_create_ip"];
                  
                 $app_json = json_encode($array);
                 $app_url = $pre_url.$app_json;

@@ -419,7 +419,7 @@ $("#buy_num").change(function(){change_num(3);});
 
 
 
-<!-- #BeginLibraryItem "/library/page_footer2.lbi" --><!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 
 
 <div class="clear"></div>
