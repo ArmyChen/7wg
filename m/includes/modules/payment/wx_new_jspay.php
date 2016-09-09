@@ -196,20 +196,42 @@ class wx_new_jspay
                 $unifiedOrder->setParameter("trade_type","WAP");//交易类型
 
                 $unifiedOrderResult = $unifiedOrder->getResult();
-                var_dump($unifiedOrderResult);
+           
                 $prepay_id = $unifiedOrderResult["prepay_id"];
                 $code_url = $unifiedOrderResult["code_url"];
                 $appid=$payment['appid'];
                 $noncestr = $unifiedOrder->parameters["nonce_str"];
                 $sign = $unifiedOrder->parameters["sign"];
           //weixin://wap/pay?appid=wxe9df2d94d30c277c&noncestr=etsrmvrxdu59xkn5jejl2e0zhuks5wsc&package=WAP&prepayid=wx201609072157312c4bb4ef200077307598&sign=BE34891AE577691463F8D498C4B8290B&timestamp=1473256652
-                 $url = Urlencode("weixin://wap/pay?appid=".$appid."&noncestr=".$noncestr."&package=WAP&prepayid=".$prepay_id."&sign=".$sign."&timestamp=".time());
+                $pre_url = "weixin://wap/pay?";
+                $time = time();
+                $url = Urlencode($pre_url."appid=".$appid."&noncestr=".$noncestr."&package=WAP&prepayid=".$prepay_id."&sign=".$sign."&timestamp=".$time);
+                $array = array();
+                $array["appid"] = $appid;
+                $array["noncestr"] = $noncestr;
+                $array["package"] = $WAP;
+                $array["prepayid"] = $prepay_id;
+                $array["sign"] = $sign;
+                $array["timestamp"] = $time;
+                $array["out_trade_no"] = $out_trade_no;
+                $array["body"] = $unifiedOrderResult["body"];
+                $array["total_fee"] = $unifiedOrderResult["total_fee"];
+                $array["notify_url"] =$unifiedOrderResult["notify_url"];
+                $array["mch_id"] =$unifiedOrderResult["mch_id"];
+                $array["spbill_create_ip"] =$unifiedOrderResult["spbill_create_ip"];
+                 
+                $app_json = json_encode($array);
+                $app_url = $pre_url.$app_json;
+
+                $html .= '<a href='.$app_url.'><button type="button"  class="c-btn3" >微信支付</button></a>';
+                        
+
                 // $url = "?prepay_id=".$prepay_id."&package=3455377915";
                 // $html .= '<div class="wx_qrcode" style="text-align:center">';
                 // $html .= $this->getcode($code_url);
                 // $html .= "</div>";
                 // $html .= "<div style=\"text-align:center\"><span style=\"color:red\">长按图片进行保存或者识别，然后用微信扫一扫扫描相册付款。</span></div>";
-                $html .= '<a href='.$url.'><button type="button"  class="c-btn3" >微信支付</button></a>';
+              
             }else{
                 $redirect = urlencode($GLOBALS['ecs']->url().'flow.php?step=ok&order_id='.$order['order_sn']);
                 $url = $jsApi->createOauthUrlForCode($redirect);
@@ -233,6 +255,7 @@ class wx_new_jspay
 
         
     }
+
 
     // function getcode($url){
     //     //var_dump($url);
