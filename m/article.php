@@ -21,7 +21,7 @@ if(isset($_REQUEST['cat_id']) && $_REQUEST['cat_id'] < 0)
 {
     $article_id = $db->getOne("SELECT article_id FROM " . $ecs->table('article') . " WHERE cat_id = '".intval($_REQUEST['cat_id'])."' ");
 }
-
+// $smarty->assign('ectouch_themes',       "/m/themes/default/"); 
 $cat_id=$db->getOne("select cat_id from ". $ecs->table('article') ." where  article_id=".$article_id."  limit 0,1");
 /*------------------------------------------------------ */
 //-- PROCESSOR

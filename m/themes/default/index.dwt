@@ -20,6 +20,7 @@ $GLOBALS['smarty']->assign('index_news_cat',get_article_cat(114));
 <link rel="stylesheet" type="text/css" href="{$ecsolve_path}/style/style.css">
 <style>
 .bigm{padding:0 6px;}
+
 </style>
 <script type="text/javascript">
 window.onload = function()
@@ -35,8 +36,8 @@ var select_spe = "请选择商品属性";
 <body>
 <div id="top">
 <div class="header hfix hm_on" id="hometop">
-<a class="logo" href="tel:4006600606"></a>
-<a href="#/fenlei.html" class="h_t h_fl">分类</a>
+<a class="logo" href="tel:4006707220"></a>
+<!--<a href="#/fenlei.html" class="h_t h_fl">分类</a>-->
 <form action="search.php" class="t_se" onsubmit="return se(this)"><input class="t_sl" id="t_sl" name="keyword" placeholder="搜索商品" type="search"><input class="t_sr" value="" type="submit"></form>
 <a href="#/chaxun.php" class="h_t h_wl">物流</a>
 </div>

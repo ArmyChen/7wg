@@ -103,14 +103,14 @@ function changenum(diff) {
 .summary{line-height:2rem;}
 #wapTeMai img{ height:32rem; }
 .swipe-wrap li {text-align:center;}
-
+.goods{position:relative !important;}
+.btn{position:relative !important;}
 		  </style>
 </head>
 <body style="padding: 0px; margin: 0px auto;">
 
 
-<div class="header headerHide">
-    <img original="{$ecsolve_path}/images/allwaplist.jpg" src="{$ecsolve_path}/images/allwaplist.jpg">
+<div class="header headerHide" style="position: relative;">
     <h2>商品详情</h2>
     <a href="javascript:history.back();"></a>
     <a href="index.php" class="right"></a>
@@ -419,7 +419,7 @@ $("#buy_num").change(function(){change_num(3);});
 
 
 
-<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/page_footer2.lbi" --><!-- #EndLibraryItem -->
 
 
 <div class="clear"></div>
