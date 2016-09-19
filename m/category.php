@@ -60,7 +60,6 @@ else
 
 
 
-
 /* 初始化分页信息 */
 $page = isset($_REQUEST['page'])   && intval($_REQUEST['page'])  > 0 ? intval($_REQUEST['page'])  : 1;
 $size = isset($_CFG['page_size'])  && intval($_CFG['page_size']) > 0 ? intval($_CFG['page_size']) : 10;
@@ -392,6 +391,7 @@ if (!$smarty->is_cached('category.dwt', $cache_id))
         }
     }
 
+
     assign_template('c', array($cat_id));
 
     $position = assign_ur_here($cat_id, $brand_name);
@@ -478,6 +478,7 @@ $smarty->assign('adlist',     get_pcat_ad(9,$cat_id));   //文章列表_关于�
         $page = $max_page;
     }
     $goodslist = category_get_goods($children, $brand, $price_min, $price_max, $ext, $size, $page, $sort, $order);
+ //   var_dump($_CFG['page_size']);exit;
     if($display == 'grid')
     {
         if(count($goodslist) % 2 != 0)
@@ -485,6 +486,7 @@ $smarty->assign('adlist',     get_pcat_ad(9,$cat_id));   //文章列表_关于�
             $goodslist[] = array();
         }
     }
+    $smarty->assign('max_page', $max_page);
     $smarty->assign('goods_list',       $goodslist);
     $smarty->assign('category',         $cat_id);
     $smarty->assign('script_name', 'category');

@@ -117,8 +117,6 @@
 </div>
 
 
-
-<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 <script type="text/javascript" src="{$ecsolve_path}/js/app.js"></script><script>
 var jian=100;
 var page="1";

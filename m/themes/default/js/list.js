@@ -70,14 +70,17 @@ loadData();
 function loadData(){
 if(npage>total){return;}
 isf=1;
-lod.show();
+//lod.show();
 $.ajax({
         url:nurl+npage,
         async:false,
         dataType:"html",
         success:function(c){
-			lod.hide();
-			gl.append(c);
+			//lod.hide();
+
+			var ct = $(c).find('#glist');
+			//console.log(ct);
+			gl.append(ct.html());
 			isf=0;
 			yem.text(npage+"/"+total);
 			npage++;
