@@ -199,7 +199,7 @@ function changenum(diff) {
 
  <div class="shopcart" style="height:auto">
 
-		  <table>
+		  <table width="100%">
 		  <!-- {foreach from=$specification item=spec key=spec_key} -->
 		  <tr><td>
 		  <div class="pro_num" style="float:left; padding-top:0px"><span style="padding-top:6px">{$spec.name}：</span>
@@ -278,7 +278,7 @@ function changenum(diff) {
 	  <!-- <span class="fR gcaranniu current" style="float:left;  margin-top: 1rem;"  onclick="javascript:collectg({$goods.goods_id})">加入收藏</span>-->
 	    
 	    <span class="fR gcaranniu current"  style="float:left;  margin-top: 1rem;"  onclick="javascript:addToCartg({$goods.goods_id},0,0)">加入购物车</span>
-	    
+	    <span class="fR gcaranniu current"  style="float:right;  margin-top: 1rem;"  onclick="javascript:buyGoods({$goods.goods_id},0,0)">立即购买</span>
 	    </div>
  </td>
 	      </tr>
@@ -665,8 +665,91 @@ function addToCartg(goodsId, parentId, flag)
 
 }
 
+/****add by wj begin*****/
+function buyGoods(goodsId, parentId, flag)
+{
+    var goods        = new Object();
+    var spec_arr     = new Array();
+    var fittings_arr = new Array();
+    var number       = 1;
+    var formBuy      = document.forms['ECS_FORMBUY'];
+    var quick		   = 0;
 
+    // 检查是否有商品规格
+    if (formBuy)
+    {
+      spec_arr = getSelectedAttributesg(formBuy);
 
+      if (formBuy.elements['number'])
+      {
+        number = formBuy.elements['number'].value;
+      }
+  	    quick = 1;
+    }
+
+    goods.quick    = quick;
+    goods.spec     = spec_arr;
+    goods.goods_id = goodsId;
+    goods.number   = number;
+    goods.parent   = (typeof(parentId) == "undefined") ? 0 : parseInt(parentId);
+
+    if (flag == 0){
+        Ajax.call('flow.php?step=add_to_cart&act=immedately', 'goods=' + objToJSONString(goods), addToCartImmedatelyResponseExg, 'POST', 'JSON');
+    }else{
+  	    Ajax.call('flow.php?step=add_to_cart&act=immedately', 'goods=' + objToJSONString(goods), addToCartImmedatelyResponseg, 'POST', 'JSON');
+  	}
+}
+function addToCartImmedatelyResponseExg(result)
+{
+  if (result.error > 0)
+  {
+    // 如果需要缺货登记，跳转
+    if (result.error == 2)
+    {
+      if (confirm(result.message))
+      {
+        location.href = 'user.php?act=add_booking&id=' + result.goods_id + '&spec=' + result.product_spec;
+      }
+    }
+    // 没选规格，弹出属性选择框
+    else
+    {
+      alert(result.message);
+    }
+  }
+  else
+  {
+        location.href = 'flow.php?step=checkout';
+  }
+}
+function addToCartImmedatelyResponseg(result)
+{
+  if (result.error > 0)
+  {
+    // 如果需要缺货登记，跳转
+    if (result.error == 2)
+    {
+      if (confirm(result.message))
+      {
+        location.href = 'user.php?act=add_booking&id=' + result.goods_id + '&spec=' + result.product_spec;
+      }
+    }
+    // 没选规格，弹出属性选择框
+    else if (result.error == 6)
+    {
+      openSpeDiv(result.message, result.goods_id, result.parent);
+    }
+    else
+    {
+      //alert(result.message);
+    }
+  }
+  else
+  {
+		location.href = 'flow.php?step=checkout';
+  }
+}
+/*****add by wj end******/
 
 function getSelectedAttributesg(formBuy)
 {
