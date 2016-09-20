@@ -93,9 +93,6 @@
 
 
 
-<div class="pd10" > <!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
-</div>
-
 
 
 <div class="bfx">
@@ -116,12 +113,14 @@
 
 </div>
 
-
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 <script type="text/javascript" src="{$ecsolve_path}/js/app.js"></script><script>
 var jian=100;
 var page="1";
-var total="6";
-var nurl="man/feijibei/t-o-p2.html?is_ajax=1&p=";
+var total="{$max_page}";
+//var nurl="man/feijibei/t-o-p2.html?is_ajax=1&p=";
+var nurl="?page=";
+
 lazyload({defObj:"#glist"});
 </script>
 <script type="text/javascript" src="{$ecsolve_path}/js/list.js"></script>

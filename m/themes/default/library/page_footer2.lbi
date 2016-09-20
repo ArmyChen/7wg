@@ -6,7 +6,7 @@
 <li>
 <a href="index.php" class="na">首页</a>
 <a href="cat_all.php" class="na">分类</a>
-<a href="car.php" class="na">购物车<em class="cnum" id="cnumb">1</em></a>
+<a href="car.php" class="na">购物车<em class="cnum" id="cnumb">{insert name='cart_info_number'}</em></a>
 <a href="index.php?intro=hot" class="na">热销</a>
 </li>
 <li>
