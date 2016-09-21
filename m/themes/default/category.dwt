@@ -96,7 +96,7 @@
 
 
 <div class="bfx">
-<em class="yem" id="yem">1/6</em><a href="javascript:;" onclick="gotop()" class="ftop"></a></div>
+<em class="yem" id="yem">1/{$max_page}</em><a href="javascript:;" onclick="gotop()" class="ftop"></a></div>
 <div id="pgl" class="hid"><p onclick="gxl()" class="gbr">收起</p>
  
 </div>
