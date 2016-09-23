@@ -82,5 +82,5 @@ var process_request = "{$lang.process_request}";
 
 <!-- {/if} -->
 
-<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+
 </body></html>

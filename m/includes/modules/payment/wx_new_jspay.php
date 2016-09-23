@@ -57,7 +57,7 @@ class wx_new_jspay
     function __construct()
     {
         $payment = get_payment('wx_new_jspay');
-    
+
         if(!defined('WXAPPID'))
         {
             $root_url = str_replace('m/', '', $GLOBALS['ecs']->url());
@@ -77,26 +77,26 @@ class wx_new_jspay
 
     function get_code($order, $payment)
     {
-      
-		
+
+
         $jsApi = new JsApi_pub();
-	//var_dump($_GET['code']);
-       
+        //var_dump($_GET['code']);
+
         if (!isset($_GET['code']))
         {
-         
-			//$redirect = urlencode($GLOBALS['ecs']->url().'flow.php?step=ok&order_id='.$order['order_sn']);
-           // $url = $jsApi->createOauthUrlForCode($redirect);
+
+            //$redirect = urlencode($GLOBALS['ecs']->url().'flow.php?step=ok&order_id='.$order['order_sn']);
+            // $url = $jsApi->createOauthUrlForCode($redirect);
             //Header("Location: $url"); 
         }else
         {
             $code = $_GET['code'];
             $jsApi->setCode($code);
-			
+
             $openid = $jsApi->getOpenId();
-			//var_dump($openid);
+            //var_dump($openid);
         }
-        
+
         if($openid)
         {
             $unifiedOrder = new UnifiedOrder_pub();
@@ -173,10 +173,10 @@ class wx_new_jspay
         }
         else
         {
-           // $html .= '<script language="javascript">';
-           // $html .= 'function callpay(){';
-           // $html .= 'alert("请在微信中使用微信支付")';
-           // $html .= "}";
+            // $html .= '<script language="javascript">';
+            // $html .= 'function callpay(){';
+            // $html .= 'alert("请在微信中使用微信支付")';
+            // $html .= "}";
             //$html .= '</script>';
             //$html .= '<button type="button" class="c-btn3" onclick="callpay()"       class="pay_bottom">微信支付</button>';
 
@@ -186,65 +186,44 @@ class wx_new_jspay
             if(strpos($user_agent, 'MicroMessenger') === false)
             {
                 $unifiedOrder = new UnifiedOrder_pub();
-	
+
                 $unifiedOrder->setParameter("body",$order['order_sn']);//商品描述
                 $out_trade_no = $order['order_sn'];
                 $unifiedOrder->setParameter("out_trade_no","$out_trade_no");//商户订单号 
                 $unifiedOrder->setParameter("attach",strval($order['log_id']));//商户支付日志
                 $unifiedOrder->setParameter("total_fee",strval(intval($order['order_amount']*100)));//总金额
                 $unifiedOrder->setParameter("notify_url",WXNOTIFY_URL);//通知地址 
-                $unifiedOrder->setParameter("trade_type","NATIVE");//交易类型
+                $unifiedOrder->setParameter("trade_type","WAP");//交易类型
 
                 $unifiedOrderResult = $unifiedOrder->getResult();
-           
+                //var_dump($unifiedOrderResult);
                 $prepay_id = $unifiedOrderResult["prepay_id"];
                 $code_url = $unifiedOrderResult["code_url"];
                 $appid=$payment['appid'];
                 $noncestr = $unifiedOrder->parameters["nonce_str"];
                 $sign = $unifiedOrder->parameters["sign"];
-          //weixin://wap/pay?appid=wxe9df2d94d30c277c&noncestr=etsrmvrxdu59xkn5jejl2e0zhuks5wsc&package=WAP&prepayid=wx201609072157312c4bb4ef200077307598&sign=BE34891AE577691463F8D498C4B8290B&timestamp=1473256652
-                $pre_url = "weixin://wap/pay?";
-                $time = time();
-                $url = Urlencode($pre_url."appid=".$appid."&noncestr=".$noncestr."&package=WAP&prepayid=".$prepay_id."&sign=".$sign."&timestamp=".$time);
-                $array = array();
-                $array["appid"] = $appid;
-                $array["noncestr"] = $noncestr;
-                $array["package"] = $WAP;
-                $array["prepayid"] = $prepay_id;
-                $array["sign"] = $sign;
-                $array["timestamp"] = $time;
-                $array["out_trade_no"] = $out_trade_no;
-                $array["body"] = $unifiedOrderResult["body"];
-                $array["total_fee"] = strval(intval($order['order_amount']*100));
-                $array["notify_url"] = WXNOTIFY_URL;
-                $array["mch_id"] =$unifiedOrderResult["mch_id"];
-                 
-                $app_json = json_encode($array);
-                $app_url = $pre_url.$app_json;
-
-                $html .= '<a href='.$app_url.'><button type="button"  class="c-btn3" >微信支付</button></a>';
-                        
-
+                //weixin://wap/pay?appid=wxe9df2d94d30c277c&noncestr=etsrmvrxdu59xkn5jejl2e0zhuks5wsc&package=WAP&prepayid=wx201609072157312c4bb4ef200077307598&sign=BE34891AE577691463F8D498C4B8290B&timestamp=1473256652
+                $url = "weixin://wap/pay".Urlencode("appid=".$appid."&noncestr=".$noncestr."&package=WAP&prepayid=".$prepay_id."&sign=".$sign."&timestamp=".time());
                 // $url = "?prepay_id=".$prepay_id."&package=3455377915";
                 // $html .= '<div class="wx_qrcode" style="text-align:center">';
                 // $html .= $this->getcode($code_url);
                 // $html .= "</div>";
                 // $html .= "<div style=\"text-align:center\"><span style=\"color:red\">长按图片进行保存或者识别，然后用微信扫一扫扫描相册付款。</span></div>";
-              
+                $html .= '<a href='.$url.'><button type="button"  class="c-btn3" >微信支付</button></a>';
             }else{
                 $redirect = urlencode($GLOBALS['ecs']->url().'flow.php?step=ok&order_id='.$order['order_sn']);
                 $url = $jsApi->createOauthUrlForCode($redirect);
                 $html .= '<a href='.$url.'><button type="button"  class="c-btn3" >微信支付</button></a>';
             }
 
-           
-             //Header("Location: $url"); //取消了这个，否就是用户查看订单就自动跳了
-           //$html .= '<script language="javascript">';
-          // $html .= 'function callpay(){';
-           // $html .= 'alert("请在微信中使用微信支付")';
-           // $html .= "}";
-          // $html .= '</script>';
-           
+
+            //Header("Location: $url"); //取消了这个，否就是用户查看订单就自动跳了
+            //$html .= '<script language="javascript">';
+            // $html .= 'function callpay(){';
+            // $html .= 'alert("请在微信中使用微信支付")';
+            // $html .= "}";
+            // $html .= '</script>';
+
 
             return $html;
 
@@ -252,9 +231,8 @@ class wx_new_jspay
 
         }
 
-        
-    }
 
+    }
 
     // function getcode($url){
     //     //var_dump($url);
@@ -278,10 +256,10 @@ class wx_new_jspay
     // //    return '<img src="'.$GLOBALS['ecs']->url(). 'images/qrcode/'.basename($filename).'" />';
     //     return '<img src="'.$GLOBALS['ecs']->url(). 'images/qrcode/'.basename($filename).'" />';
     // }
-    
+
     function respond()
     {
-		
+
         $payment  = get_payment('wx_new_jspay');
 
         $notify = new Notify_pub();
@@ -289,7 +267,7 @@ class wx_new_jspay
         $notify->saveData($xml);
         if($payment['logs'])
         {
-			
+
             $this->log(ROOT_PATH.'/data/wx_new_log.txt',"传递过来的XML\r\n".var_export($xml,true));
         }
         if($notify->checkSign() == TRUE)
@@ -315,26 +293,26 @@ class wx_new_jspay
                 $log_id = $notify->data["attach"];
                 $sql = 'SELECT order_amount FROM ' . $GLOBALS['ecs']->table('pay_log') ." WHERE log_id = '$log_id'";
                 $amount = $GLOBALS['db']->getOne($sql);
-                
+
                 if($payment['logs'])
                 {
                     $this->log(ROOT_PATH.'/data/wx_new_log.txt','订单金额'.$amount."\r\n");
                 }
-                
+
                 if(intval($amount*100) != $total_fee)
                 {
-                    
+
                     if($payment['logs'])
-                    {   
+                    {
                         $this->log(ROOT_PATH.'/data/wx_new_log.txt','订单金额不符'."\r\n");
                     }
-                    
+
                     echo 'fail';
                     return;
                 }
 
                 order_paid($log_id, 2);
-				 $this->log(ROOT_PATH.'/data/wx_new_log.txt','测试一下'."\r\n");
+                $this->log(ROOT_PATH.'/data/wx_new_log.txt','测试一下'."\r\n");
                 return true;
             }
 
@@ -344,15 +322,15 @@ class wx_new_jspay
             $this->log(ROOT_PATH.'/data/wx_new_log.txt',"签名失败\r\n");
         }
         return false;
-       
-    }
-    
 
-function respondok()
+    }
+
+
+    function respondok()
     {
         $payment  = get_payment('wx_new_jspay');
-         return true;
-       
+        return true;
+
     }
 
 
@@ -361,12 +339,12 @@ function respondok()
 
     function log($file,$txt)
     {
-       $fp =  fopen($file,'ab+');
-       fwrite($fp,'-----------'.local_date('Y-m-d H:i:s').'-----------------');
-       fwrite($fp,$txt);
-       fwrite($fp,"\r\n\r\n\r\n");
-       fclose($fp);
+        $fp =  fopen($file,'ab+');
+        fwrite($fp,'-----------'.local_date('Y-m-d H:i:s').'-----------------');
+        fwrite($fp,$txt);
+        fwrite($fp,"\r\n\r\n\r\n");
+        fclose($fp);
     }
-    
+
 }
 ?>
